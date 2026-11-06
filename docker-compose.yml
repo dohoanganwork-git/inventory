@@ -1,0 +1,48 @@
+# Chạy toàn bộ hệ thống trên máy: docker compose up -d --build
+# Sau khi khởi động, mở http://localhost:3000 (tài khoản demo: quanly / nhanvien / ketoan – mật khẩu songdem123)
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kho_songdem
+      MYSQL_USER: kho
+      MYSQL_PASSWORD: kho123
+      TZ: Asia/Ho_Chi_Minh
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/kho_songdem?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Ho_Chi_Minh&allowPublicKeyRetrieval=true&useSSL=false
+      DB_USERNAME: kho
+      DB_PASSWORD: kho123
+      JWT_SECRET: doi-chuoi-nay-khi-trien-khai-that-toi-thieu-32-ky-tu
+      SEED_DATA: "true"
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  mysql-data:
