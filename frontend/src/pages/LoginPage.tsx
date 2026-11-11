@@ -1,5 +1,6 @@
 import { Alert, Button, Card, Form, Input, Space, Typography } from 'antd';
-import { LockOutlined, UserOutlined, CheckCircleOutlined, FileDoneOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import logoWhite from '../assets/logo-longwaits-white.png';
 import { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
@@ -37,10 +38,7 @@ export default function LoginPage() {
   return (
     <div className="login-page">
       <div className="login-intro">
-        <Space size={10} align="center">
-          <div className="brand-logo"><FileDoneOutlined /></div>
-          <b style={{ fontSize: 18 }}>LongWaits Kho</b>
-        </Space>
+        <img src={logoWhite} alt="LongWaits" className="login-logo" />
         <h1>Quản lý tồn kho &amp; nhà cung cấp</h1>
         <p>Công ty TNHH Sông Đêm – cơ sở LongWaits Jazz Club, số 5 Nguyễn Quang Bích, Hoàn Kiếm, Hà Nội.</p>
         <div className="login-features">

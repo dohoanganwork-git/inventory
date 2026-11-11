@@ -1,10 +1,11 @@
 import { Avatar, Button, Drawer, Dropdown, Grid, Layout, Menu, Space, Typography } from 'antd';
 import type { MenuProps } from 'antd';
 import {
-  AppstoreOutlined, BarChartOutlined, DashboardOutlined, DatabaseOutlined, DollarOutlined, FileDoneOutlined,
+  AppstoreOutlined, BarChartOutlined, DashboardOutlined, DatabaseOutlined, DollarOutlined,
   ImportOutlined, ExportOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, MenuOutlined, ShopOutlined,
   TagsOutlined, TeamOutlined, UserOutlined, WarningOutlined, AuditOutlined, KeyOutlined, ReconciliationOutlined,
 } from '@ant-design/icons';
+import logoWhite from '../assets/logo-longwaits-white.png';
 import { useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
@@ -41,12 +42,12 @@ const NAV: NavGroup[] = [
 
 function Brand({ collapsed }: { collapsed?: boolean }) {
   return (
-    <div className="brand">
-      <div className="brand-logo"><FileDoneOutlined /></div>
+    <div className={`brand ${collapsed ? 'brand-collapsed' : ''}`}>
+      <img src={logoWhite} alt="LongWaits" className="brand-img" />
       {!collapsed && (
         <div className="brand-text">
-          <div className="brand-name">LongWaits Kho</div>
-          <div className="brand-sub">Công ty TNHH Sông Đêm</div>
+          <div className="brand-name">Quản lý kho</div>
+          <div className="brand-sub">Công ty Sông Đêm</div>
         </div>
       )}
     </div>
