@@ -36,24 +36,21 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-      <div className="login-hero">
-        <div>
-          <Space size={10} align="center">
-            <div className="brand-logo"><FileDoneOutlined /></div>
-            <b style={{ fontSize: 18 }}>LongWaits Kho</b>
-          </Space>
-          <h1>Quản lý tồn kho &amp; nhà cung cấp</h1>
-          <p>Công ty TNHH Sông Đêm – cơ sở LongWaits Jazz Club, số 5 Nguyễn Quang Bích, Hoàn Kiếm, Hà Nội.</p>
-          <div className="login-hide-mobile" style={{ marginTop: 28 }}>
-            {['Theo dõi tồn kho theo thời gian thực, cảnh báo hàng sắp hết',
-              'Nhập hàng, nhập doanh số POS cuối ngày, kiểm kê và đối soát',
-              'Lưu trữ thông tin nhà cung cấp, hợp đồng và công nợ',
-              'Báo cáo tồn kho, tiêu thụ, công nợ – xuất Excel / PDF'].map((t) => (
-              <div className="login-feature" key={t}><CheckCircleOutlined />{t}</div>
-            ))}
-          </div>
+      <div className="login-intro">
+        <Space size={10} align="center">
+          <div className="brand-logo"><FileDoneOutlined /></div>
+          <b style={{ fontSize: 18 }}>LongWaits Kho</b>
+        </Space>
+        <h1>Quản lý tồn kho &amp; nhà cung cấp</h1>
+        <p>Công ty TNHH Sông Đêm – cơ sở LongWaits Jazz Club, số 5 Nguyễn Quang Bích, Hoàn Kiếm, Hà Nội.</p>
+        <div className="login-features">
+          {['Theo dõi tồn kho theo thời gian thực, cảnh báo hàng sắp hết',
+            'Nhập hàng, nhập doanh số POS cuối ngày, kiểm kê và đối soát',
+            'Lưu trữ thông tin nhà cung cấp, hợp đồng và công nợ',
+            'Báo cáo tồn kho, tiêu thụ, công nợ – xuất Excel / PDF'].map((t) => (
+            <div className="login-feature" key={t}><CheckCircleOutlined />{t}</div>
+          ))}
         </div>
-        <div className="login-hide-mobile" style={{ color: '#8d9aba', fontSize: 13 }}>Khóa luận tốt nghiệp · Đỗ Hoàng An · 65A.HTQL – NEU</div>
       </div>
       <div className="login-form-wrap">
         <Card className="login-card" variant="borderless">

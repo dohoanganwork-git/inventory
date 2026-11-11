@@ -69,22 +69,22 @@ export default function ItemsPage() {
           <Segmented value={status} onChange={(v) => setStatus(v as typeof status)}
             options={[{ label: 'Đang sử dụng', value: 'active' }, { label: 'Ngừng sử dụng', value: 'inactive' }, { label: 'Tất cả', value: 'all' }]} />
         </div>
-        <Table<Item> rowKey="id" loading={loading} dataSource={rows} scroll={{ x: 1100 }}
+        <Table<Item> rowKey="id" loading={loading} dataSource={rows} scroll={{ x: 1355 }}
           pagination={{ pageSize: 20, hideOnSinglePage: true, showTotal: (t) => `${t} mặt hàng` }}
           locale={{ emptyText: 'Không tìm thấy mặt hàng phù hợp' }}
           rowClassName={(r) => `row-clickable ${r.active ? '' : 'row-muted'}`}
           onRow={(r) => ({ onClick: () => setViewing(r.id) })}
           columns={[
-            { title: 'Mã hàng', dataIndex: 'code', width: 130, render: (v) => <b>{v}</b>, sorter: (a, b) => a.code.localeCompare(b.code) },
-            { title: 'Mã POS', dataIndex: 'posCode', width: 100 },
-            { title: 'Tên mặt hàng', dataIndex: 'name', sorter: (a, b) => a.name.localeCompare(b.name, 'vi') },
-            { title: 'Loại hàng', dataIndex: ['category', 'name'], width: 150 },
-            { title: 'Nhà cung cấp', dataIndex: ['supplier', 'name'], width: 200, render: (v) => v ?? '—' },
-            { title: 'ĐVT', dataIndex: 'unit', width: 70 },
-            { title: 'Tồn', dataIndex: 'currentStock', width: 70, align: 'right', sorter: (a, b) => a.currentStock - b.currentStock },
-            { title: 'Mốc', dataIndex: 'minStock', width: 70, align: 'right' },
+            { title: 'Mã hàng', dataIndex: 'code', width: 120, render: (v) => <b>{v}</b>, sorter: (a, b) => a.code.localeCompare(b.code) },
+            { title: 'Mã POS', dataIndex: 'posCode', width: 110 },
+            { title: 'Tên mặt hàng', dataIndex: 'name', width: 230, sorter: (a, b) => a.name.localeCompare(b.name, 'vi') },
+            { title: 'Loại hàng', dataIndex: ['category', 'name'], width: 130 },
+            { title: 'Nhà cung cấp', dataIndex: ['supplier', 'name'], width: 160, render: (v) => v ?? '—' },
+            { title: 'ĐVT', dataIndex: 'unit', width: 65 },
+            { title: 'Tồn', dataIndex: 'currentStock', width: 85, align: 'right', sorter: (a, b) => a.currentStock - b.currentStock },
+            { title: 'Mốc', dataIndex: 'minStock', width: 65, align: 'right' },
             { title: 'Giá bán', dataIndex: 'salePrice', width: 110, align: 'right', render: fmtMoney },
-            { title: 'Trạng thái', width: 150, render: (_, r) => (r.active ? <StockStatusTag status={r.stockStatus} stock={r.currentStock} /> : <ActiveTag active={false} />) },
+            { title: 'Trạng thái', width: 140, render: (_, r) => (r.active ? <StockStatusTag status={r.stockStatus} stock={r.currentStock} /> : <ActiveTag active={false} />) },
             {
               title: 'Thao tác', fixed: 'right', width: isManager ? 140 : 70, render: (_, r) => (
                 <Space onClick={(e) => e.stopPropagation()}>
