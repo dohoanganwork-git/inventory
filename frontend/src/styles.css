@@ -111,7 +111,6 @@ body { margin: 0; background: #f4f6f9; color: var(--ink); -webkit-font-smoothing
 .login-feature .anticon { color: #7fb2f0; font-size: 18px; margin-top: 2px; }
 .login-form-wrap { grid-column: 2; grid-row: 1; align-self: center; width: 100%; }
 .login-card { width: 100%; border-radius: 16px !important; box-shadow: 0 24px 60px rgba(4, 10, 30, .45); }
-.demo-accounts { margin-top: 16px; padding: 12px; border-radius: 8px; background: #f6f8fb; border: 1px dashed #c9d4e6; }
 /* Màn hình hẹp: giới thiệu nằm trên, khung đăng nhập bên dưới, căn giữa */
 @media (max-width: 1100px) {
   .login-page { grid-template-columns: 1fr; row-gap: 24px; justify-items: center; align-content: center; }

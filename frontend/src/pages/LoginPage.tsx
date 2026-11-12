@@ -1,16 +1,10 @@
-import { Alert, Button, Card, Form, Input, Space, Typography } from 'antd';
+import { Alert, Button, Card, Form, Input, Typography } from 'antd';
 import { LockOutlined, UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import logoWhite from '../assets/logo-longwaits-white.png';
 import { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { parseError } from '../api/client';
-
-const DEMO = [
-  { u: 'quanly', label: 'Quản lý' },
-  { u: 'nhanvien', label: 'Nhân viên' },
-  { u: 'ketoan', label: 'Kế toán' },
-];
 
 export default function LoginPage() {
   const { user, login } = useAuth();
@@ -64,16 +58,6 @@ export default function LoginPage() {
             </Form.Item>
             <Button type="primary" htmlType="submit" block loading={loading}>Đăng nhập</Button>
           </Form>
-          <div className="demo-accounts">
-            <Typography.Text type="secondary" style={{ fontSize: 13 }}>Tài khoản dùng thử (mật khẩu <b>songdem123</b>):</Typography.Text>
-            <Space wrap style={{ marginTop: 8 }}>
-              {DEMO.map((d) => (
-                <Button key={d.u} size="small" onClick={() => form.setFieldsValue({ username: d.u, password: 'songdem123' })}>
-                  {d.label}: {d.u}
-                </Button>
-              ))}
-            </Space>
-          </div>
         </Card>
       </div>
     </div>
