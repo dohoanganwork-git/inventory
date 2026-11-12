@@ -23,7 +23,8 @@ export default function CategoriesPage() {
   const [form] = Form.useForm();
 
   const save = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     setSaving(true);
     try {
       if (editing === 'new') await api.post('/categories', v);
@@ -49,7 +50,7 @@ export default function CategoriesPage() {
   return (
     <>
       <PageHeader title="Loại hàng" subtitle="Phân nhóm sản phẩm: bia, rượu vang, đồ uống đóng chai/lon, merchandise..."
-        extra={isManager && <Button type="primary" icon={<PlusOutlined />} onClick={() => { setEditing('new'); form.resetFields(); }}>Thêm loại hàng</Button>} />
+        extra={isManager && <Button type="primary" icon={<PlusOutlined />} onClick={() => setEditing('new')}>Thêm loại hàng</Button>} />
       <Card className="section-card">
         <div className="filter-bar">
           <Input allowClear prefix={<SearchOutlined />} placeholder="Tìm theo mã, tên..." value={q} onChange={(e) => setQ(e.target.value)} style={{ maxWidth: 300 }} />
@@ -68,7 +69,7 @@ export default function CategoriesPage() {
             ...(isManager ? [{
               title: 'Thao tác', width: 110, render: (_: unknown, r: Category) => (
                 <Space>
-                  <Tooltip title="Chỉnh sửa"><Button icon={<EditOutlined />} onClick={() => { setEditing(r); form.setFieldsValue(r); }} /></Tooltip>
+                  <Tooltip title="Chỉnh sửa"><Button icon={<EditOutlined />} onClick={() => setEditing(r)} /></Tooltip>
                   <Tooltip title={r.active ? 'Ngừng sử dụng' : 'Sử dụng lại'}><Button icon={r.active ? <StopOutlined /> : <CheckOutlined />} onClick={() => toggle(r)} /></Tooltip>
                 </Space>
               ),
@@ -77,7 +78,7 @@ export default function CategoriesPage() {
       </Card>
       <Modal open={!!editing} title={editing === 'new' ? 'Thêm loại hàng' : 'Chỉnh sửa loại hàng'} onOk={save} onCancel={() => setEditing(null)}
         okText="Lưu" cancelText="Hủy" confirmLoading={saving} destroyOnHidden>
-        <Form form={form} layout="vertical" preserve={false}>
+        <Form form={form} layout="vertical" preserve={false} initialValues={editing && editing !== 'new' ? editing : undefined}>
           <Form.Item name="code" label="Mã loại hàng" rules={[{ required: true, message: 'Vui lòng nhập mã' }, { max: 30 }]}><Input placeholder="vd: BIA" style={{ textTransform: 'uppercase' }} /></Form.Item>
           <Form.Item name="name" label="Tên loại hàng" rules={[{ required: true, message: 'Vui lòng nhập tên' }]}><Input placeholder="vd: Bia thủ công" /></Form.Item>
           <Form.Item name="description" label="Mô tả"><Input.TextArea rows={3} maxLength={500} showCount /></Form.Item>

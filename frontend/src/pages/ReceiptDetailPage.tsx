@@ -67,7 +67,7 @@ export default function ReceiptDetailPage() {
       <Row gutter={[16, 16]}>
         <Col xs={24} xl={16}>
           <Card className="section-card" title="Thông tin phiếu">
-            <Descriptions size="small" column={{ xs: 1, sm: 2 }} bordered className="kv-grid">
+            <Descriptions size="small" column={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2, xxl: 2 }} bordered className="kv-grid">
               <Descriptions.Item label="Nhà cung cấp">{r.supplier.name}</Descriptions.Item>
               <Descriptions.Item label="Số hóa đơn">{r.invoiceNo}</Descriptions.Item>
               <Descriptions.Item label="Ngày nhập">{fmtDate(r.receiptDate)}</Descriptions.Item>

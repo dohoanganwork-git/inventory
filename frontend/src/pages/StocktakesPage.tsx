@@ -26,7 +26,8 @@ export default function StocktakesPage() {
   const canUpload = hasRole('STAFF', 'MANAGER');
 
   const create = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     if (!countFile) { ui.message.warning('Vui lòng chọn file tồn thực tế'); return; }
     const fd = new FormData();
     fd.append('countFile', countFile);

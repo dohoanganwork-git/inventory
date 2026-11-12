@@ -32,7 +32,7 @@ export default function ItemDrawer({ itemId, onClose }: { itemId: string | null;
             {canSeeValues && <Col xs={12} md={6}><StatCard title="Giá vốn gần nhất" value={fmtMoney(shown.lastCost)} /></Col>}
             {canSeeValues && <Col xs={12} md={6}><StatCard title="Giá trị tồn" value={fmtMoney(shown.stockValue)} /></Col>}
           </Row>
-          <Descriptions size="small" column={{ xs: 1, md: 2 }} style={{ marginTop: 16 }} className="kv-grid" bordered>
+          <Descriptions size="small" column={{ xs: 1, sm: 1, md: 2, lg: 2, xl: 2, xxl: 2 }} style={{ marginTop: 16 }} className="kv-grid" bordered>
             <Descriptions.Item label="Mã hàng"><b>{shown.code}</b></Descriptions.Item>
             <Descriptions.Item label="Mã trên POS">{shown.posCode}</Descriptions.Item>
             <Descriptions.Item label="Loại hàng">{shown.category?.name}</Descriptions.Item>

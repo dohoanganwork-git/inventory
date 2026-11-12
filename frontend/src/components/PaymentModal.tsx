@@ -31,7 +31,8 @@ export function PaymentModal({ receipts, open, onClose, onDone }: { receipts: Re
   const total = Object.values(amounts).reduce<number>((s, v) => s + (v ?? 0), 0);
 
   const submit = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     for (const r of receipts) {
       const a = amounts[r.id] ?? 0;
       if (a <= 0) { ui.message.warning(`Số tiền thanh toán cho phiếu ${r.code} phải lớn hơn 0`); return; }
@@ -103,7 +104,8 @@ export function PaymentEditModal({ payment, maxAmount, onClose, onDone }: { paym
 
   const submit = async () => {
     if (!payment) return;
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     setSaving(true);
     try {
       await api.put(`/payments/${payment.id}`, multipart({ ...v, paidAt: toIso(v.paidAt) }, { evidence: file }));

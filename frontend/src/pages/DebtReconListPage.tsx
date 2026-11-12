@@ -24,7 +24,8 @@ export default function DebtReconListPage() {
   const [form] = Form.useForm();
 
   const create = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     if (!invoiceFile) { ui.message.warning('Vui lòng chọn file hóa đơn của nhà cung cấp'); return; }
     const fd = new FormData();
     fd.append('invoiceFile', invoiceFile);

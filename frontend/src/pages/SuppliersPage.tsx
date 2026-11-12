@@ -81,6 +81,18 @@ function SupplierDrawer({ id, onClose, onEdit }: { id: string | null; onClose: (
   );
 }
 
+/** Dữ liệu ban đầu cho biểu mẫu nhà cung cấp (form được tạo mới mỗi lần mở hộp thoại). */
+function supplierInitialValues(s: Supplier | 'new' | null) {
+  if (!s) return undefined;
+  if (s === 'new') return { paymentMethod: 'Chuyển khoản' };
+  return {
+    ...s,
+    contractPeriod: s.contractStart || s.contractEnd
+      ? [s.contractStart ? dayjs(s.contractStart) : null, s.contractEnd ? dayjs(s.contractEnd) : null]
+      : undefined,
+  };
+}
+
 export default function SuppliersPage() {
   const { hasRole, canSeeValues } = useAuth();
   const isManager = hasRole('MANAGER');
@@ -102,14 +114,11 @@ export default function SuppliersPage() {
     setViewing(null);
     setEditing(s);
     setFile(null);
-    form.resetFields();
-    if (s !== 'new') {
-      form.setFieldsValue({ ...s, contractPeriod: s.contractStart || s.contractEnd ? [s.contractStart ? dayjs(s.contractStart) : null, s.contractEnd ? dayjs(s.contractEnd) : null] : undefined });
-    } else form.setFieldsValue({ paymentMethod: 'Chuyển khoản' });
   };
 
   const save = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     const { contractPeriod, ...rest } = v;
     const body = { ...rest, contractStart: toIso(contractPeriod?.[0]), contractEnd: toIso(contractPeriod?.[1]) };
     setSaving(true);
@@ -168,7 +177,7 @@ export default function SuppliersPage() {
       <SupplierDrawer id={viewing} onClose={() => setViewing(null)} onEdit={isManager ? open : undefined} />
       <Modal open={!!editing} title={editing === 'new' ? 'Thêm nhà cung cấp' : 'Chỉnh sửa nhà cung cấp'} onOk={save} onCancel={() => setEditing(null)}
         okText="Lưu" cancelText="Hủy" confirmLoading={saving} width={760} destroyOnHidden>
-        <Form form={form} layout="vertical" preserve={false}>
+        <Form form={form} layout="vertical" preserve={false} initialValues={supplierInitialValues(editing)}>
           <Divider orientation="left" plain style={{ marginTop: 0 }}>Thông tin liên hệ</Divider>
           <Row gutter={12}>
             <Col xs={24} sm={8}><Form.Item name="code" label="Mã NCC" rules={[{ required: true, message: 'Nhập mã' }]}><Input style={{ textTransform: 'uppercase' }} /></Form.Item></Col>

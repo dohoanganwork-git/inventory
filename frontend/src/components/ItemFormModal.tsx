@@ -21,7 +21,8 @@ export default function ItemFormModal({ open, item, categories, suppliers, onClo
   }, [open, item, form]);
 
   const save = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     setSaving(true);
     try {
       if (item) await api.put(`/items/${item.id}`, v);

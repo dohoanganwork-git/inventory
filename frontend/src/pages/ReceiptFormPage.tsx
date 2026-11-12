@@ -83,7 +83,8 @@ export default function ReceiptFormPage() {
   };
 
   const save = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     const valid = lines.filter((l) => l.itemId);
     if (valid.length === 0) { ui.message.warning('Phiếu nhập phải có ít nhất một mặt hàng'); return; }
     const bad = valid.find((l) => !l.quantity || l.quantity <= 0 || !l.unitPrice || l.unitPrice <= 0);

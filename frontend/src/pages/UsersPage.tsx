@@ -25,14 +25,13 @@ export default function UsersPage() {
   const [form] = Form.useForm();
 
   const open = (u: User | 'new') => {
+    // Dữ liệu ban đầu truyền qua initialValues (form được tạo mới mỗi lần mở hộp thoại)
     setEditing(u);
-    form.resetFields();
-    if (u !== 'new') form.setFieldsValue(u);
-    else form.setFieldsValue({ role: 'STAFF' });
   };
 
   const save = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     setSaving(true);
     try {
       if (editing === 'new') {
@@ -98,7 +97,7 @@ export default function UsersPage() {
 
       <Modal open={!!editing} title={editing === 'new' ? 'Tạo tài khoản mới' : 'Chỉnh sửa tài khoản'} onCancel={() => setEditing(null)}
         onOk={save} okText="Lưu" cancelText="Hủy" confirmLoading={saving} destroyOnHidden>
-        <Form form={form} layout="vertical" preserve={false}>
+        <Form form={form} layout="vertical" preserve={false} initialValues={editing === 'new' ? { role: 'STAFF' } : editing ?? undefined}>
           <Form.Item name="username" label="Tên đăng nhập" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' },
             { pattern: /^[a-zA-Z0-9._-]{3,50}$/, message: '3–50 ký tự: chữ không dấu, số, dấu chấm, gạch' }]}>
             <Input disabled={editing !== 'new'} placeholder="vd: nhanvien3" />

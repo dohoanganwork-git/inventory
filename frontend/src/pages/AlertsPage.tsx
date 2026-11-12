@@ -27,7 +27,8 @@ export default function AlertsPage() {
   const phone = (id?: string) => suppliers?.find((s) => s.id === id)?.phone;
 
   const saveThreshold = async () => {
-    const v = await form.validateFields();
+    const v = await form.validateFields().catch(() => null);
+    if (!v) return;
     try {
       await api.patch(`/items/${editing!.id}/threshold`, v);
       ui.message.success('Đã cập nhật mốc cảnh báo');
