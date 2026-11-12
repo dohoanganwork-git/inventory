@@ -51,7 +51,7 @@ public class TabularFile {
     }
 
     private static TabularFile readCsv(byte[] data) throws Exception {
-        String text = new String(data, StandardCharsets.UTF_8);
+        String text = CsvEncoding.decode(data);
         if (text.startsWith("﻿")) text = text.substring(1);
         String firstLine = text.lines().findFirst().orElse("");
         char delimiter = firstLine.chars().filter(c -> c == ';').count() > firstLine.chars().filter(c -> c == ',').count() ? ';' : ',';

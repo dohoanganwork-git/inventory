@@ -218,7 +218,7 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private BytesMultipartFile damageFile(String code, int qty, String reason) {
-        String csv = "Mã hàng,Tên hàng,Số lượng hỏng/hủy,Lý do\n" + code + ",\"" + seeds.get(code).name() + "\"," + qty + "," + reason + "\n";
+        String csv = "Mã hàng,Tên hàng,Số lượng hỏng/hủy,Lý do\n" + code + ",\"" + seeds.get(code).name() + "\"," + qty + ",\"" + reason + "\"\n";
         return new BytesMultipartFile("damageFile", "hang-hong-huy.csv", "text/csv", csv.getBytes(StandardCharsets.UTF_8));
     }
 

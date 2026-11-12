@@ -29,7 +29,12 @@ public class MiscController {
     @GetMapping("/files/{id}")
     public ResponseEntity<byte[]> file(@PathVariable String id, @RequestParam(defaultValue = "false") boolean inline) {
         var f = fileStorageService.load(id);
-        return Downloads.file(f.file().getOriginalName(), f.file().getContentType(), f.data(), inline);
+        String name = f.file().getOriginalName();
+        if (name != null && name.toLowerCase(java.util.Locale.ROOT).endsWith(".csv")) {
+            // Thêm BOM để Excel mở đúng tiếng Việt (áp dụng cả cho file đã lưu trước đây)
+            return Downloads.file(name, "text/csv; charset=UTF-8", vn.songdem.inventory.util.CsvEncoding.forExcel(f.data()), inline);
+        }
+        return Downloads.file(name, f.file().getContentType(), f.data(), inline);
     }
 
     @GetMapping("/templates/{type}")
